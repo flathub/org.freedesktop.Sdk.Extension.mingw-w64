@@ -36,6 +36,7 @@ modules:
       - --enable-deterministic-archives
       - --disable-nls
       - --disable-werror
+    install-rule: install-strip
     builddir: true
     sources: &binutils_sources
       - type: archive
@@ -47,6 +48,7 @@ modules:
       config-opts:
         - --target=i686-w64-mingw32
     config-opts: *binutils_config_opts
+    install-rule: install-strip
     builddir: true
     sources: *binutils_sources
 
@@ -196,6 +198,7 @@ modules:
       - --enable-libgomp
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
+    install-rule: install-strip
     builddir: true
     sources: *gcc_sources
 
@@ -206,6 +209,7 @@ modules:
     config-opts: *gcc_config_opts
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
+    install-rule: install-strip
     builddir: true
     sources: *gcc_sources
 
