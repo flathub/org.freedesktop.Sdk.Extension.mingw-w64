@@ -21,6 +21,7 @@ build-options:
   cxxflags-override: true
   ldflags: -L/usr/lib/sdk/mingw-w64/lib
   ldflags-override: true
+  strip: true
 modules:
 
   # Binutils
@@ -29,6 +30,8 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
+      env:
+        target: x86_64-w64-mingw32
     config-opts: &binutils_config_opts
       - --with-system-zlib
       - --enable-lto
@@ -36,6 +39,12 @@ modules:
       - --enable-deterministic-archives
       - --disable-nls
       - --disable-werror
+    post-install: &binutils_post_install
+      - |
+        for i in ${FLATPAK_DEST}/bin/${target}-* ${FLATPAK_DEST}/${target}/bin/*; do
+          cp -a $i $i.tmp
+          mv -f $i.tmp $i
+        done
     builddir: true
     sources: &binutils_sources
       - type: archive
@@ -46,7 +55,10 @@ modules:
     build-options:
       config-opts:
         - --target=i686-w64-mingw32
+      env:
+        target: i686-w64-mingw32
     config-opts: *binutils_config_opts
+    post-install: *binutils_post_install
     builddir: true
     sources: *binutils_sources
 
@@ -104,6 +116,8 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
+      env:
+        target: x86_64-w64-mingw32
     config-opts: &gcc_bootstrap_config_opts
       - --disable-multilib
       - --enable-languages=c,lto
@@ -113,6 +127,10 @@ modules:
     make-args:
       - all-gcc
     install-rule: install-gcc
+    post-install: &gcc_bootstrap_post_install
+      - |
+        cp -a ${FLATPAK_DEST}/bin/${target}-gcc{,.tmp}
+        mv -f ${FLATPAK_DEST}/bin/${target}-gcc{.tmp,}
     builddir: true
     sources: &gcc_sources
       - type: archive
@@ -123,10 +141,13 @@ modules:
     build-options:
       config-opts:
         - --target=i686-w64-mingw32
+      env:
+        target: i686-w64-mingw32
     config-opts: *gcc_bootstrap_config_opts
     make-args:
       - all-gcc
     install-rule: install-gcc
+    post-install: *gcc_bootstrap_post_install
     builddir: true
     sources: *gcc_sources
 
@@ -183,6 +204,8 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
+      env:
+        target: x86_64-w64-mingw32
     config-opts: &gcc_config_opts
       - --disable-multilib
       - --enable-languages=c,c++,lto
@@ -196,6 +219,12 @@ modules:
       - --enable-libgomp
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
+    post-install: &gcc_post_install
+    - |
+      for i in gcc gc++; do
+        cp -a ${FLATPAK_DEST}/bin/${target}-$i{,.tmp}
+        mv -f ${FLATPAK_DEST}/bin/${target}-$i{.tmp,}
+      done
     builddir: true
     sources: *gcc_sources
 
@@ -203,9 +232,12 @@ modules:
     build-options:
       config-opts:
         - --target=i686-w64-mingw32
+      env:
+        target: i686-w64-mingw32
     config-opts: *gcc_config_opts
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
+    post-install: *gcc_post_install
     builddir: true
     sources: *gcc_sources
 
