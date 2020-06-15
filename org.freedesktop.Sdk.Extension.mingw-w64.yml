@@ -112,6 +112,8 @@ modules:
       - --enable-lto
       - --with-system-zlib
       - --enable-static
+      - --disable-sjlj-exceptions
+      - --with-dwarf2
     make-args:
       - all-gcc
     install-rule: install-gcc
@@ -196,6 +198,8 @@ modules:
       - --enable-libstdcxx-time=yes
       - --enable-libstdcxx-filesystem-ts=yes
       - --enable-libgomp
+      - --disable-sjlj-exceptions
+      - --with-dwarf2
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
     install-rule: install-strip
