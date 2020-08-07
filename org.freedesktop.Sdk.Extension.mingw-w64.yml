@@ -217,6 +217,44 @@ modules:
     builddir: true
     sources: *gcc_sources
 
+  # Tools
+
+  - name: mingw-w64-gendef
+    subdir: mingw-w64-tools/gendef
+    sources: *mingw_src
+
+  - name: mingw-w64-genidl
+    subdir: mingw-w64-tools/genidl
+    sources: *mingw_src
+
+  - name: mingw-w64-genlib
+    subdir: mingw-w64-tools/genlib
+    sources: *mingw_src
+
+  - name: mingw-w64-genpeimg
+    subdir: mingw-w64-tools/genpeimg
+    sources: *mingw_src
+
+  - name: mingw-w64-widl-x86_64
+    build-options:
+      config-opts:
+        - --target=x86_64-w64-mingw32
+        - --program-prefix=x86_64-w64-mingw32-
+    builddir: true
+    subdir: mingw-w64-tools/widl
+    sources: *mingw_src
+
+  - name: mingw-w64-widl-i686
+    build-options:
+      config-opts:
+        - --target=i686-w64-mingw32
+        - --program-prefix=i686-w64-mingw32-
+    builddir: true
+    subdir: mingw-w64-tools/widl
+    sources: *mingw_src
+
+  # Flatpak bundle
+
   - name: bundle-setup
     buildsystem: simple
     build-commands:
