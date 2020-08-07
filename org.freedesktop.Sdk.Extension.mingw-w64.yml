@@ -253,8 +253,12 @@ modules:
         - --program-prefix=x86_64-w64-mingw32-
     builddir: true
     subdir: mingw-w64-tools/widl
-    sources:
+    sources: &mingw_widl_src
       - *mingw_src
+      - type: patch
+        only-arches:
+          - aarch64
+        path: patches/mingw-w64-tools-aarch64.patch
 
   - name: mingw-w64-widl-i686
     build-options:
@@ -263,8 +267,7 @@ modules:
         - --program-prefix=i686-w64-mingw32-
     builddir: true
     subdir: mingw-w64-tools/widl
-    sources:
-      - *mingw_src
+    sources: *mingw_widl_src
 
   # Flatpak bundle
 
