@@ -21,6 +21,10 @@ build-options:
   cxxflags-override: true
   ldflags: -L/usr/lib/sdk/mingw-w64/lib
   ldflags-override: true
+x-mingw-src: &mingw_src
+  type: archive
+  url: "https://downloads.sourceforge.net/mingw-w64/mingw-w64-v7.0.0.tar.bz2"
+  sha256: aa20dfff3596f08a7f427aab74315a6cb80c2b086b4a107ed35af02f9496b628
 modules:
 
   # Binutils
@@ -64,10 +68,8 @@ modules:
       - --enable-secure-api
     builddir: true
     subdir: mingw-w64-headers
-    sources: &mingw_src
-      - type: archive
-        url: "https://downloads.sourceforge.net/mingw-w64/mingw-w64-v7.0.0.tar.bz2"
-        sha256: aa20dfff3596f08a7f427aab74315a6cb80c2b086b4a107ed35af02f9496b628
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-headers-i686
     build-options:
@@ -77,7 +79,8 @@ modules:
     config-opts: *mingw_headers_config_opts
     builddir: true
     subdir: mingw-w64-headers
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # GCC dependencies
 
@@ -145,7 +148,8 @@ modules:
         - --disable-lib32
     builddir: true
     subdir: mingw-w64-crt
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-crt-i686
     build-options:
@@ -155,7 +159,8 @@ modules:
         - --prefix=${FLATPAK_DEST}/i686-w64-mingw32
     builddir: true
     subdir: mingw-w64-crt
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # MinGW winpthreads
 
@@ -169,7 +174,8 @@ modules:
       - --enable-shared
     builddir: true
     subdir: mingw-w64-libraries/winpthreads
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-winpthreads-i686
     build-options:
@@ -179,7 +185,8 @@ modules:
     config-opts: *mingw_winpthreads_config_opts
     builddir: true
     subdir: mingw-w64-libraries/winpthreads
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # GCC full
 
@@ -221,19 +228,23 @@ modules:
 
   - name: mingw-w64-gendef
     subdir: mingw-w64-tools/gendef
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-genidl
     subdir: mingw-w64-tools/genidl
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-genlib
     subdir: mingw-w64-tools/genlib
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-genpeimg
     subdir: mingw-w64-tools/genpeimg
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-widl-x86_64
     build-options:
@@ -242,7 +253,8 @@ modules:
         - --program-prefix=x86_64-w64-mingw32-
     builddir: true
     subdir: mingw-w64-tools/widl
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-widl-i686
     build-options:
@@ -251,7 +263,8 @@ modules:
         - --program-prefix=i686-w64-mingw32-
     builddir: true
     subdir: mingw-w64-tools/widl
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # Flatpak bundle
 
