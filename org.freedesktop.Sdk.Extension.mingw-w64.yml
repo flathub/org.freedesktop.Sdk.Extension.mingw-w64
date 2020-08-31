@@ -44,8 +44,8 @@ modules:
     builddir: true
     sources: &binutils_sources
       - type: archive
-        url: "https://ftp.gnu.org/gnu/binutils/binutils-2.32.tar.gz"
-        sha256: 9b0d97b3d30df184d302bced12f976aa1e5fbf4b0be696cdebc6cca30411a46e
+        url: "https://ftp.gnu.org/gnu/binutils/binutils-2.35.tar.gz"
+        sha256: a3ac62bae4f339855b5449cfa9b49df90c635adbd67ecb8a0e7f3ae86a058da6
 
   - name: binutils-i686
     build-options:
