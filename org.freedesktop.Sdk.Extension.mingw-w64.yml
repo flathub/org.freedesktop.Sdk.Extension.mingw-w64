@@ -258,7 +258,7 @@ modules:
       - type: patch
         only-arches:
           - aarch64
-        path: patches/mingw-w64-tools-aarch64.patch
+        path: patches/mingw-w64-tools/aarch64.patch
 
   - name: mingw-w64-widl-i686
     build-options:
