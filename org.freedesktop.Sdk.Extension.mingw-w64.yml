@@ -23,8 +23,8 @@ build-options:
   ldflags-override: true
 x-mingw-src: &mingw_src
   type: archive
-  url: "https://downloads.sourceforge.net/mingw-w64/mingw-w64-v7.0.0.tar.bz2"
-  sha256: aa20dfff3596f08a7f427aab74315a6cb80c2b086b4a107ed35af02f9496b628
+  url: "https://downloads.sourceforge.net/mingw-w64/mingw-w64-v8.0.0.tar.bz2"
+  sha256: 44c740ea6ab3924bc3aa169bad11ad3c5766c5c8459e3126d44eabb8735a5762
 modules:
 
   # Binutils
@@ -125,6 +125,9 @@ modules:
       - type: archive
         url: "https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz"
         sha256: b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c
+      - type: patch
+        paths:
+          - patches/gcc/0020-libgomp-Don-t-hard-code-MS-printf-attributes.patch
 
   - name: gcc-bootstrap-i686
     build-options:
@@ -258,7 +261,7 @@ modules:
       - type: patch
         only-arches:
           - aarch64
-        path: patches/mingw-w64-tools-aarch64.patch
+        path: patches/mingw-w64-tools/aarch64.patch
 
   - name: mingw-w64-widl-i686
     build-options:
