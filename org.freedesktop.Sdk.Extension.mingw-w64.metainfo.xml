@@ -6,4 +6,7 @@
   <name>MinGW-w64</name>
   <summary>Development environment targeting Windows</summary>
   <url type="homepage">http://mingw-w64.sourceforge.net/</url>
+  <releases>
+    <release version="8.0.0" date="2020-09-18"/>
+  </releases>
 </component>
