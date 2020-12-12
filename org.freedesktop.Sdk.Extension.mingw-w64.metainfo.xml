@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="runtime">
+<component type="addon">
   <id>org.freedesktop.Sdk.Extension.mingw-w64</id>
+  <extends>org.freedesktop.Sdk</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>ZPL-2.1 and GPL-3.0-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.0-or-later and LicenseRef-Public-Domain</project_license>
   <name>MinGW-w64</name>
