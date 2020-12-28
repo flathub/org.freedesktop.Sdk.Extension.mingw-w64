@@ -124,6 +124,7 @@ modules:
       - --enable-threads=posix
       - --enable-libstdcxx-time=yes
       - --enable-libstdcxx-filesystem-ts=yes
+      - --enable-fully-dynamic-string
       - --enable-libgomp
       - --enable-lto
       - --with-isl
