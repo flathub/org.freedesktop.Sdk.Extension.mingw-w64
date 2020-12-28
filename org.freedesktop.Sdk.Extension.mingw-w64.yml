@@ -109,12 +109,17 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
-    config-opts: &gcc_bootstrap_config_opts
+    config-opts: &gcc_config_opts
       - --disable-multilib
-      - --enable-languages=c,lto
-      - --enable-lto
+      - --enable-languages=c,c++,lto
       - --with-system-zlib
+      - --enable-shared
       - --enable-static
+      - --enable-threads=posix
+      - --enable-libstdcxx-time=yes
+      - --enable-libstdcxx-filesystem-ts=yes
+      - --enable-libgomp
+      - --enable-lto
       - --disable-sjlj-exceptions
       - --with-dwarf2
     make-args:
@@ -133,7 +138,7 @@ modules:
     build-options:
       config-opts:
         - --target=i686-w64-mingw32
-    config-opts: *gcc_bootstrap_config_opts
+    config-opts: *gcc_config_opts
     make-args:
       - all-gcc
     install-rule: install-gcc
@@ -197,19 +202,7 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
-    config-opts: &gcc_config_opts
-      - --disable-multilib
-      - --enable-languages=c,c++,lto
-      - --enable-lto
-      - --with-system-zlib
-      - --enable-shared
-      - --enable-static
-      - --enable-threads=posix
-      - --enable-libstdcxx-time=yes
-      - --enable-libstdcxx-filesystem-ts=yes
-      - --enable-libgomp
-      - --disable-sjlj-exceptions
-      - --with-dwarf2
+    config-opts: *gcc_config_opts
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
     install-rule: install-strip
