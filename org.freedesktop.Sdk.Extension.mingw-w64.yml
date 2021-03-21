@@ -86,8 +86,8 @@ modules:
 
   - name: mpc
     config-opts:
-      - --enable-shared
-      - --disable-static
+      - --disable-shared
+      - --enable-static
     sources:
       - type: archive
         url: "https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz"
@@ -96,12 +96,21 @@ modules:
 
       - name: mpfr
         config-opts:
-          - --enable-shared
-          - --disable-static
+          - --disable-shared
+          - --enable-static
         sources:
           - type: archive
             url: "https://ftp.gnu.org/gnu/mpfr/mpfr-4.1.0.tar.xz"
             sha256: 0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f
+
+  - name: isl
+    config-opts:
+      - --disable-shared
+      - --enable-static
+    sources:
+      - type: archive
+        url: "http://isl.gforge.inria.fr/isl-0.22.1.tar.gz"
+        sha256: f9663ced2c1e6d6737da7255d64d5faee61a4f763538b39c8f50da953fdc0b99
 
   # GCC bootstrap
 
@@ -118,8 +127,11 @@ modules:
       - --enable-threads=posix
       - --enable-libstdcxx-time=yes
       - --enable-libstdcxx-filesystem-ts=yes
+      - --enable-fully-dynamic-string
       - --enable-libgomp
       - --enable-lto
+      - --with-isl
+      - --enable-cloog-backend=isl
       - --disable-sjlj-exceptions
       - --with-dwarf2
     make-args:
