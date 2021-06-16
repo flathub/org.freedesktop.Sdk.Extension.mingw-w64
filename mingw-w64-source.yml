@@ -6,3 +6,4 @@ x-checker-data:
   url: https://sourceforge.net/projects/mingw-w64/rss
   version-pattern: <link>https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/mingw-w64-v(\d\.[\d\.]\.\d).tar.bz2/download</link>
   url-template: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v$version.tar.bz2
+  is-main-source: true
