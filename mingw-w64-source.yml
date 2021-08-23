@@ -1,9 +1,0 @@
-type: archive
-url: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v9.0.0.tar.bz2
-sha256: 1929b94b402f5ff4d7d37a9fe88daa9cc55515a6134805c104d1794ae22a4181
-x-checker-data:
-  type: html
-  url: https://sourceforge.net/projects/mingw-w64/rss
-  version-pattern: <link>https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/mingw-w64-v(\d\.[\d\.]\.\d).tar.bz2/download</link>
-  url-template: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v$version.tar.bz2
-  is-main-source: true
