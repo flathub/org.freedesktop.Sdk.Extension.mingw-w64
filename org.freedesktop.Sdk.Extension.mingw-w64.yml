@@ -115,7 +115,7 @@ modules:
       - --enable-static
     sources:
       - type: archive
-        url: http://isl.gforge.inria.fr/isl-0.22.1.tar.gz
+        url: https://libisl.sourceforge.io/isl-0.22.1.tar.gz
         sha256: f9663ced2c1e6d6737da7255d64d5faee61a4f763538b39c8f50da953fdc0b99
 
   # GCC bootstrap
