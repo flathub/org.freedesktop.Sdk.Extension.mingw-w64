@@ -1,9 +1,9 @@
 id: org.freedesktop.Sdk.Extension.mingw-w64
-branch: "19.08"
+branch: '21.08'
 build-extension: true
 sdk: org.freedesktop.Sdk
 runtime: org.freedesktop.Sdk
-runtime-version: "19.08"
+runtime-version: '21.08'
 separate-locales: false
 appstream-compose: false
 sdk-extensions: []
@@ -21,6 +21,16 @@ build-options:
   cxxflags-override: true
   ldflags: -L/usr/lib/sdk/mingw-w64/lib
   ldflags-override: true
+x-mingw-src: &mingw_src
+  type: archive
+  url: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v10.0.0.tar.bz2
+  sha256: ba6b430aed72c63a3768531f6a3ffc2b0fde2c57a3b251450dcf489a894f0894
+  x-checker-data:
+    type: html
+    url: https://sourceforge.net/projects/mingw-w64/rss
+    version-pattern: <link>https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/mingw-w64-v([\d\.]+).tar.bz2/download</link>
+    url-template: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v$version.tar.bz2
+    is-main-source: true
 modules:
 
   # Binutils
@@ -40,8 +50,8 @@ modules:
     builddir: true
     sources: &binutils_sources
       - type: archive
-        url: "https://ftp.gnu.org/gnu/binutils/binutils-2.32.tar.gz"
-        sha256: 9b0d97b3d30df184d302bced12f976aa1e5fbf4b0be696cdebc6cca30411a46e
+        url: https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz
+        sha256: c44968b97cd86499efbc4b4ab7d98471f673e5414c554ef54afa930062dbbfcb
 
   - name: binutils-i686
     build-options:
@@ -64,10 +74,8 @@ modules:
       - --enable-secure-api
     builddir: true
     subdir: mingw-w64-headers
-    sources: &mingw_src
-      - type: archive
-        url: "https://downloads.sourceforge.net/mingw-w64/mingw-w64-v7.0.0.tar.bz2"
-        sha256: aa20dfff3596f08a7f427aab74315a6cb80c2b086b4a107ed35af02f9496b628
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-headers-i686
     build-options:
@@ -77,28 +85,38 @@ modules:
     config-opts: *mingw_headers_config_opts
     builddir: true
     subdir: mingw-w64-headers
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # GCC dependencies
 
   - name: mpc
     config-opts:
-      - --enable-shared
-      - --disable-static
+      - --disable-shared
+      - --enable-static
     sources:
       - type: archive
-        url: "https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz"
+        url: https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz
         sha256: 6985c538143c1208dcb1ac42cedad6ff52e267b47e5f970183a3e75125b43c2e
     modules:
 
       - name: mpfr
         config-opts:
-          - --enable-shared
-          - --disable-static
+          - --disable-shared
+          - --enable-static
         sources:
           - type: archive
-            url: "https://ftp.gnu.org/gnu/mpfr/mpfr-4.0.2.tar.gz"
-            sha256: ae26cace63a498f07047a784cd3b0e4d010b44d2b193bab82af693de57a19a78
+            url: https://ftp.gnu.org/gnu/mpfr/mpfr-4.1.0.tar.xz
+            sha256: 0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f
+
+  - name: isl
+    config-opts:
+      - --disable-shared
+      - --enable-static
+    sources:
+      - type: archive
+        url: https://libisl.sourceforge.io/isl-0.22.1.tar.gz
+        sha256: f9663ced2c1e6d6737da7255d64d5faee61a4f763538b39c8f50da953fdc0b99
 
   # GCC bootstrap
 
@@ -106,12 +124,20 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
-    config-opts: &gcc_bootstrap_config_opts
+    config-opts: &gcc_config_opts
       - --disable-multilib
-      - --enable-languages=c,lto
-      - --enable-lto
+      - --enable-languages=c,c++,lto
       - --with-system-zlib
+      - --enable-shared
       - --enable-static
+      - --enable-threads=posix
+      - --enable-libstdcxx-time=yes
+      - --enable-libstdcxx-filesystem-ts=yes
+      - --enable-fully-dynamic-string
+      - --enable-libgomp
+      - --enable-lto
+      - --with-isl
+      - --enable-cloog-backend=isl
       - --disable-sjlj-exceptions
       - --with-dwarf2
     make-args:
@@ -120,14 +146,17 @@ modules:
     builddir: true
     sources: &gcc_sources
       - type: archive
-        url: "https://ftp.gnu.org/gnu/gcc/gcc-9.2.0/gcc-9.2.0.tar.xz"
-        sha256: ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206
+        url: https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.xz
+        sha256: d08edc536b54c372a1010ff6619dd274c0f1603aa49212ba20f7aa2cda36fa8b
+      - type: patch
+        paths:
+          - patches/gcc/0020-libgomp-Don-t-hard-code-MS-printf-attributes.patch
 
   - name: gcc-bootstrap-i686
     build-options:
       config-opts:
         - --target=i686-w64-mingw32
-    config-opts: *gcc_bootstrap_config_opts
+    config-opts: *gcc_config_opts
     make-args:
       - all-gcc
     install-rule: install-gcc
@@ -145,7 +174,8 @@ modules:
         - --disable-lib32
     builddir: true
     subdir: mingw-w64-crt
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-crt-i686
     build-options:
@@ -155,7 +185,8 @@ modules:
         - --prefix=${FLATPAK_DEST}/i686-w64-mingw32
     builddir: true
     subdir: mingw-w64-crt
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # MinGW winpthreads
 
@@ -169,7 +200,8 @@ modules:
       - --enable-shared
     builddir: true
     subdir: mingw-w64-libraries/winpthreads
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   - name: mingw-w64-winpthreads-i686
     build-options:
@@ -179,7 +211,8 @@ modules:
     config-opts: *mingw_winpthreads_config_opts
     builddir: true
     subdir: mingw-w64-libraries/winpthreads
-    sources: *mingw_src
+    sources:
+      - *mingw_src
 
   # GCC full
 
@@ -187,19 +220,7 @@ modules:
     build-options:
       config-opts:
         - --target=x86_64-w64-mingw32
-    config-opts: &gcc_config_opts
-      - --disable-multilib
-      - --enable-languages=c,c++,lto
-      - --enable-lto
-      - --with-system-zlib
-      - --enable-shared
-      - --enable-static
-      - --enable-threads=posix
-      - --enable-libstdcxx-time=yes
-      - --enable-libstdcxx-filesystem-ts=yes
-      - --enable-libgomp
-      - --disable-sjlj-exceptions
-      - --with-dwarf2
+    config-opts: *gcc_config_opts
     ensure-writable:
       - /lib/gcc/*/*/install-tools/*.conf
     install-rule: install-strip
@@ -217,11 +238,55 @@ modules:
     builddir: true
     sources: *gcc_sources
 
+  # Tools
+
+  - name: mingw-w64-gendef
+    subdir: mingw-w64-tools/gendef
+    sources:
+      - *mingw_src
+
+  - name: mingw-w64-genidl
+    subdir: mingw-w64-tools/genidl
+    sources:
+      - *mingw_src
+
+  - name: mingw-w64-genlib
+    subdir: mingw-w64-tools/genlib
+    sources:
+      - *mingw_src
+
+  - name: mingw-w64-genpeimg
+    subdir: mingw-w64-tools/genpeimg
+    sources:
+      - *mingw_src
+
+  - name: mingw-w64-widl-x86_64
+    build-options:
+      config-opts:
+        - --target=x86_64-w64-mingw32
+        - --program-prefix=x86_64-w64-mingw32-
+    builddir: true
+    subdir: mingw-w64-tools/widl
+    sources: &mingw_widl_src
+      - *mingw_src
+
+  - name: mingw-w64-widl-i686
+    build-options:
+      config-opts:
+        - --target=i686-w64-mingw32
+        - --program-prefix=i686-w64-mingw32-
+    builddir: true
+    subdir: mingw-w64-tools/widl
+    sources: *mingw_widl_src
+
+  # Flatpak bundle
+
   - name: bundle-setup
     buildsystem: simple
     build-commands:
       - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
-      - appstream-compose --basename=${FLATPAK_ID} --prefix=${FLATPAK_DEST} --origin=flatpak ${FLATPAK_ID}
+      - appstream-compose --basename=${FLATPAK_ID} --prefix=${FLATPAK_DEST} --origin=flatpak
+        ${FLATPAK_ID}
     sources:
       - type: file
         path: org.freedesktop.Sdk.Extension.mingw-w64.metainfo.xml
