@@ -1,9 +1,9 @@
 id: org.freedesktop.Sdk.Extension.mingw-w64
-branch: '22.08beta'
+branch: '22.08'
 build-extension: true
 sdk: org.freedesktop.Sdk
 runtime: org.freedesktop.Sdk
-runtime-version: '22.08beta'
+runtime-version: '22.08'
 separate-locales: false
 appstream-compose: false
 sdk-extensions: []
