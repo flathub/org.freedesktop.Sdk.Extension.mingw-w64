@@ -8,7 +8,6 @@
   <summary>Development environment targeting Windows</summary>
   <url type="homepage">http://mingw-w64.sourceforge.net/</url>
   <releases>
-    <release version="12.0.0" date="2024-05-29"/>
     <release version="11.0.1" date="2023-08-07"/>
     <release version="11.0.0" date="2023-04-28"/>
     <release version="10.0.0" date="2022-04-04"/>
