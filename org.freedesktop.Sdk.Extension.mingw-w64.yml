@@ -22,8 +22,8 @@ build-options:
   ldflags-override: true
 x-mingw-src: &mingw_src
   type: archive
-  url: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v11.0.1.tar.bz2
-  sha256: 3f66bce069ee8bed7439a1a13da7cb91a5e67ea6170f21317ac7f5794625ee10
+  url: https://downloads.sourceforge.net/mingw-w64/mingw-w64-v12.0.0.tar.bz2
+  sha256: cc41898aac4b6e8dd5cffd7331b9d9515b912df4420a3a612b5ea2955bbeed2f
   x-checker-data:
     type: html
     url: https://sourceforge.net/projects/mingw-w64/rss
@@ -246,11 +246,6 @@ modules:
 
   - name: mingw-w64-genidl
     subdir: mingw-w64-tools/genidl
-    sources:
-      - *mingw_src
-
-  - name: mingw-w64-genlib
-    subdir: mingw-w64-tools/genlib
     sources:
       - *mingw_src
 
