@@ -49,8 +49,8 @@ modules:
     builddir: true
     sources: &binutils_sources
       - type: archive
-        url: https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.gz
-        sha256: 0cdd76777a0dfd3dd3a63f215f030208ddb91c2361d2bcc02acec0f1c16b6a2e
+        url: https://ftp.gnu.org/gnu/binutils/binutils-2.43.1.tar.gz
+        sha256: e4c38b893f590853fbe276a6b8a1268101e35e61849a07f6ee97b5ecc97fbff8
         x-checker-data:
           type: anitya
           project-id: 7981
@@ -115,8 +115,8 @@ modules:
           - --enable-static
         sources:
           - type: archive
-            url: https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.2.tar.xz
-            sha256: b67ba0383ef7e8a8563734e2e889ef5ec3c3b898a01d00fa0a6869ad81c6ce01
+            url: https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.xz
+            sha256: 277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2
             x-checker-data:
               type: anitya
               project-id: 2019
@@ -165,8 +165,8 @@ modules:
     builddir: true
     sources: &gcc_sources
       - type: archive
-        url: https://github.com/gcc-mirror/gcc/archive/refs/tags/releases/gcc-14.2.0.tar.gz
-        sha256: 201c92bf612ab0a357fdbb3db312f720eefaa49d6ce02825bbb5468d5ee1d07a
+        url: https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz
+        sha256: a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9
         x-checker-data:
           type: anitya
           project-id: 6502
