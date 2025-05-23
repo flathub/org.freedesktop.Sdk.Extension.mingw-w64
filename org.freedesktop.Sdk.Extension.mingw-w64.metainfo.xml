@@ -6,7 +6,7 @@
   <project_license>ZPL-2.1 and GPL-3.0-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.0-or-later and LicenseRef-Public-Domain</project_license>
   <name>MinGW-w64</name>
   <summary>Development environment targeting Windows</summary>
-  <url type="homepage">http://mingw-w64.sourceforge.net/</url>
+  <url type="homepage">https://www.mingw-w64.org/</url>
   <releases>
     <release version="12.0.0" date="2024-05-29"/>
     <release version="11.0.1" date="2023-08-07"/>
