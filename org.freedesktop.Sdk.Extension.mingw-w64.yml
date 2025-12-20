@@ -49,8 +49,8 @@ modules:
     builddir: true
     sources: &binutils_sources
       - type: archive
-        url: https://ftp.gnu.org/gnu/binutils/binutils-2.43.1.tar.gz
-        sha256: e4c38b893f590853fbe276a6b8a1268101e35e61849a07f6ee97b5ecc97fbff8
+        url: https://ftp.gnu.org/gnu/binutils/binutils-2.45.1.tar.gz
+        sha256: 2b63ae0ad015eb2755294f127bfd179c1849979dd87b6e8e1a7376964a4323dc
 
   - name: binutils-i686
     build-options:
@@ -105,8 +105,8 @@ modules:
           - --enable-static
         sources:
           - type: archive
-            url: https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.xz
-            sha256: 277807353a6726978996945af13e52829e3abd7a9a5b7fb2793894e18f1fcbb2
+            url: https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.2.tar.xz
+            sha256: b67ba0383ef7e8a8563734e2e889ef5ec3c3b898a01d00fa0a6869ad81c6ce01
 
   - name: isl
     config-opts:
@@ -125,6 +125,7 @@ modules:
         - --target=x86_64-w64-mingw32
     config-opts: &gcc_config_opts
       - --disable-multilib
+      - --enable-checking=release
       - --enable-languages=c,c++,lto
       - --with-system-zlib
       - --enable-shared
@@ -145,11 +146,8 @@ modules:
     builddir: true
     sources: &gcc_sources
       - type: archive
-        url: https://ftp.gnu.org/gnu/gcc/gcc-14.2.0/gcc-14.2.0.tar.xz
-        sha256: a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9
-      - type: patch
-        paths:
-          - patches/gcc/0020-libgomp-Don-t-hard-code-MS-printf-attributes.patch
+        url: https://ftp.gnu.org/gnu/gcc/gcc-15.2.0/gcc-15.2.0.tar.xz
+        sha256: 438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e
 
   - name: gcc-bootstrap-i686
     build-options:
