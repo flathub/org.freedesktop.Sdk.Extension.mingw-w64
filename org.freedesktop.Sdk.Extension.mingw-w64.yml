@@ -43,6 +43,7 @@ modules:
       - --enable-lto
       - --enable-plugins
       - --enable-deterministic-archives
+      - --disable-multilib
       - --disable-nls
       - --disable-werror
     install-rule: install-strip
